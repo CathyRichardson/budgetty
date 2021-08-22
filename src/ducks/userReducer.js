@@ -14,7 +14,9 @@ const REQUEST_USER_DATA = "REQUEST_USER_DATA";
 // TO UPDATE VALUES IN THE REDUX STORE. THIS FUNCTION ITSELF WILL BE INVOKED IN A 
 // COMPONENT VIA PROPS ONCE THAT COMPONENT HAS CONNECTED TO IT VIA THE CONNECT METHOD
 export function requestUserData() {
-    let data = axios.get('/auth/user-data').then(({ data }) => data)
+    let data = axios.get('/auth/user-data')
+        .then(({ data }) => data);
+    console.log("*** data:", data);
     return {
         type: REQUEST_USER_DATA,
         payload: data

@@ -23,20 +23,20 @@ class Budget extends Component {
   render() {
     //DESTRUCTURE THE LOADING PROPERTY FROM THE BUDGET OBJECT THAT WAS MAPPED TO PROPS THROUGH MAPSTATETOPROPS/CONNECT
     const { loading, purchases, budgetLimit } = this.props.budget;
-    const { fistName, lastName } = this.props.user;
-     return (
+    const { firstName, lastName } = this.props.user;
+    return (
       <Background>
         {loading ? <Loading /> : null}
         <div className='budget-container'>
-          <Nav fistName={fistName} lastName={lastName} />
+          <Nav firstName={firstName} lastName={lastName} />
           <div className='content-container'>
             <div className="purchases-container">
               <AddPurchase />
-              <DisplayPurchases purchases={purchases}/>
+              <DisplayPurchases purchases={purchases} />
             </div>
             <div className='chart-container'>
-              <Chart1 purchases={purchases} budgetLimit={budgetLimit}/>
-              <Chart2 purchases={purchases}/>
+              <Chart1 purchases={purchases} budgetLimit={budgetLimit} />
+              <Chart2 purchases={purchases} />
             </div>
           </div>
         </div>
@@ -45,8 +45,8 @@ class Budget extends Component {
   }
 }
 
-// THIS FUNCTION TAKES IN THE REDUX STORE STATE AND MAPS THE BUDGET REDUCER and userReducer INFO 
-// FROM THE REDUX STORE TO A BUDGET and user KEY ON THIS COMPONENT'S PROPS OBJECT
+// THIS FUNCTION TAKES IN THE REDUX STORE STATE AND MAPS THE budgetReducer and userReducer INFO 
+// FROM THE REDUX STORE TO A budget and user KEY ON THIS COMPONENT'S PROPS OBJECT
 function mapStateToProps(state) {
   return {
     budget: state.budget,
@@ -54,7 +54,13 @@ function mapStateToProps(state) {
   }
 }
 
-// THE CONNECT METHOD TAKES IN THE MAPSTATETOPROPS FUNCTION AND CONNECTS THIS COMPONENT TO THE REDUX STORE
-// IN ORDER TO ACCESS THE REQUESTUSERDATA ACTION CREATOR, YOU NEED TO CONNECT IT TO
-// THE REDUCER FUNCTION THROUGH THE CONNECT METHOD. THE CONNECT METHOD ACCEPTS TWO ARGUMENTS, A MAPSTATETOPROPS OBJECT, AND A MAPDISPATCHTOPROPS OBJECT. OUR DISPATCHED ACTIONS GO INSIDE OF THE SECOND ARGUMENT OBJECT AS A KEY/VALUE PAIR. 
-export default connect(mapStateToProps, { requestUserData, requestBudgetData })(Budget);
+
+const mapDispatchToProps = {
+  requestUserData,
+  requestBudgetData
+}
+
+// THE CONNECT METHOD TAKES IN THE mapStateToProps FUNCTION AND CONNECTS THIS COMPONENT TO THE REDUX STORE
+// IN ORDER TO ACCESS THE requestUserData and requestBudgetData ACTION CREATOR, YOU NEED TO CONNECT IT TO
+// THE REDUCER FUNCTION THROUGH THE CONNECT METHOD. THE CONNECT METHOD ACCEPTS TWO ARGUMENTS, A mapStateToProps OBJECT, AND A mapDispatchToProps OBJECT. OUR DISPATCHED ACTIONS GO INSIDE OF THE SECOND ARGUMENT OBJECT AS A KEY/VALUE PAIR. 
+export default connect(mapStateToProps, mapDispatchToProps)(Budget);
