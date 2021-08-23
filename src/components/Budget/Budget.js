@@ -10,7 +10,7 @@ import Nav from './../shared/Nav';
 import './Budget.css';
 // IMPORT THE ACTION CREATOR FROM THE REDUCER FILE FOR USE BY THE CONNECT METHOD, WHICH THEN ADDS THE FUNCTION TO THE PROPS // OBJECT OF THIS COMPONENT
 import { requestUserData } from '../../ducks/userReducer';
-import { requestBudgetData } from '../../ducks/budgetReducer';
+import { requestBudgetData, addPurchase, removePurchase } from '../../ducks/budgetReducer';
 
 
 class Budget extends Component {
@@ -24,6 +24,7 @@ class Budget extends Component {
     //DESTRUCTURE THE LOADING PROPERTY FROM THE BUDGET OBJECT THAT WAS MAPPED TO PROPS THROUGH MAPSTATETOPROPS/CONNECT
     const { loading, purchases, budgetLimit } = this.props.budget;
     const { firstName, lastName } = this.props.user;
+    const { addPurchase, removePurchase } = this.props;
     return (
       <Background>
         {loading ? <Loading /> : null}
@@ -31,8 +32,8 @@ class Budget extends Component {
           <Nav firstName={firstName} lastName={lastName} />
           <div className='content-container'>
             <div className="purchases-container">
-              <AddPurchase />
-              <DisplayPurchases purchases={purchases} />
+              <AddPurchase addPurchase={addPurchase} />
+              <DisplayPurchases purchases={purchases} removePurchase={removePurchase} />
             </div>
             <div className='chart-container'>
               <Chart1 purchases={purchases} budgetLimit={budgetLimit} />
@@ -57,7 +58,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   requestUserData,
-  requestBudgetData
+  requestBudgetData,
+  addPurchase,
+  removePurchase
 }
 
 // THE CONNECT METHOD TAKES IN THE mapStateToProps FUNCTION AND CONNECTS THIS COMPONENT TO THE REDUX STORE

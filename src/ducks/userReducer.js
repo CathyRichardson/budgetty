@@ -16,7 +16,7 @@ const REQUEST_USER_DATA = "REQUEST_USER_DATA";
 export function requestUserData() {
     let data = axios.get('/auth/user-data')
         .then(({ data }) => data);
-    console.log("*** data:", data);
+    console.log("*** request user data:", data);
     return {
         type: REQUEST_USER_DATA,
         payload: data
